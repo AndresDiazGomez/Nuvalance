@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuvalance.Rectangle", "Nuvalance.Rectangle\Nuvalance.Rectangle.csproj", "{C1DEA220-8EF4-4085-8B2C-4BF99BBC656D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuvalance.Rectangle.Test", "Nuvalance.Rectangle.Test\Nuvalance.Rectangle.Test.csproj", "{604A24C7-E7EF-487A-8DFC-AE0ADB740549}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C1DEA220-8EF4-4085-8B2C-4BF99BBC656D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1DEA220-8EF4-4085-8B2C-4BF99BBC656D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1DEA220-8EF4-4085-8B2C-4BF99BBC656D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1DEA220-8EF4-4085-8B2C-4BF99BBC656D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{604A24C7-E7EF-487A-8DFC-AE0ADB740549}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{604A24C7-E7EF-487A-8DFC-AE0ADB740549}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{604A24C7-E7EF-487A-8DFC-AE0ADB740549}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{604A24C7-E7EF-487A-8DFC-AE0ADB740549}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8159F363-1339-4592-B5AA-F777F25BF703}
+	EndGlobalSection
+EndGlobal
