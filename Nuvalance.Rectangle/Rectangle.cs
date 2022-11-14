@@ -27,6 +27,42 @@ namespace Nuvalance.Rectangle
         }
 
         /// <summary>
+        /// Indicate the adjacent type of the operation.
+        /// </summary>
+        public enum AdjacentType
+        {
+            /// <summary>
+            /// Rectangles are not adjacent to each other.
+            /// </summary>
+            None,
+
+            /// <summary>
+            /// Rectangles are fully adjacent to each other.
+            /// </summary>
+            Proper,
+
+            /// <summary>
+            /// Share where one side of rectangle A is a line that exists as a set of points wholly contained on the other side of rectangle B.
+            /// </summary>
+            Subline,
+
+            /// <summary>
+            /// Some line segment on a side of rectangle A exists as a set of points on some side of rectangle B.
+            /// </summary>
+            Partial
+        }
+
+        /// <summary>
+        /// True if the current rectangle has area; otherwise false.
+        /// </summary>
+        public bool HasArea => !PointA.IsOnTheSameAxis(PointC);
+
+        /// <summary>
+        /// Returns the height of the current rectangle
+        /// </summary>
+        public int Height => PointA.Y - PointC.Y;
+
+        /// <summary>
         /// Left top corner point
         /// </summary>
         public Point PointA { get; }
@@ -47,6 +83,75 @@ namespace Nuvalance.Rectangle
         public Point PointD { get; }
 
         /// <summary>
+        /// Returns the width of the current rectangle
+        /// </summary>
+        public int Width => PointC.X - PointA.X;
+
+        /// <summary>
+        /// Indicate wether or not if the current rectangle is intersected with the given rectangle.
+        /// </summary>
+        /// <param name="other">Other rectangle to compare with.</param>
+        /// <returns>true if rectangles are intersected; otherwise, false.</returns>
+        public bool AreIntersected(Rectangle other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            // if rectangles have no area
+            if (!HasArea || !other.HasArea)
+            {
+                return false;
+            }
+
+            // If one rectangle is located on left side of the other
+            if (PointA.X > other.PointC.X || other.PointA.X > PointC.X)
+            {
+                return false;
+            }
+
+            // If one rectangle is located above the other
+            if (PointC.Y > other.PointA.Y || other.PointC.Y > PointA.Y)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Get the adjacent result for the adjacent operation of the current and the given rectangle.
+        /// </summary>
+        /// <param name="other">The other rectangle to compare with.</param>
+        /// <returns>An <see cref="AdjacentType"/> enum type.</returns>
+        public AdjacentType GetAdjacent(Rectangle other)
+        {
+            if (!IsAdjacentTo(other))
+            {
+                return AdjacentType.None;
+            }
+
+            var rectangle = GetRectangleFromIntersection(other);
+
+            if ((Width == rectangle.Width && other.Width == rectangle.Width) ||
+                (Height == rectangle.Height && other.Height == rectangle.Height))
+            {
+                return AdjacentType.Proper;
+            }
+
+            if (Width == rectangle.Width || 
+                Height == rectangle.Height || 
+                other.Width == rectangle.Width ||
+                other.Height == rectangle.Height)
+            {
+                return AdjacentType.Subline;
+            }
+
+            return AdjacentType.Partial;
+        }
+
+        /// <summary>
         /// Get an intersection result comparing the current to another rectangle.
         /// </summary>
         /// <param name="other">Other rectangle to compare with.</param>
@@ -57,9 +162,7 @@ namespace Nuvalance.Rectangle
             {
                 return IntersectionResult.NoIntersection;
             }
-            var pointA = new Point(Math.Max(PointA.X, other.PointA.X), Math.Min(PointA.Y, other.PointA.Y));
-            var pointC = new Point(Math.Min(PointC.X, other.PointC.X), Math.Max(PointC.Y, other.PointC.Y));
-            var rectangle = new Rectangle(pointA, pointC);
+            var rectangle = GetRectangleFromIntersection(other);
             var points = new List<Point>();
             if (IsPointOnAnyAxis(rectangle.PointA) && other.IsPointOnAnyAxis(rectangle.PointA))
             {
@@ -81,6 +184,33 @@ namespace Nuvalance.Rectangle
         }
 
         /// <summary>
+        /// Indicates whether or not if the current rectangle is adjacent to the given rectangle.
+        /// Rectangles with no area always cause a false result.
+        /// </summary>
+        /// <param name="other">The other rectangle to compare with.</param>
+        /// <returns>True if the current rectangle is adjacent to the given rectangle; otherwise false.</returns>
+        public bool IsAdjacentTo(Rectangle other)
+        {
+            // if rectangles have no area
+            if (!HasArea || !other.HasArea)
+            {
+                return false;
+            }
+
+            if (Math.Abs(PointA.X - other.PointC.X) == 0 || Math.Abs(PointC.X - other.PointA.X) == 0)
+            {
+                return !(PointA.Y < other.PointC.Y || other.PointA.Y < PointC.Y);
+            }
+
+            if (Math.Abs(PointA.Y - other.PointC.Y) == 0 || Math.Abs(PointC.Y - other.PointA.Y) == 0)
+            {
+                return !(PointC.X < other.PointA.X || other.PointC.X < PointA.X);
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Indicates whether or not if the current rectangle is fully contained in the given rectangle.
         /// Rectangles with no area always cause a false result.
         /// </summary>
@@ -93,8 +223,8 @@ namespace Nuvalance.Rectangle
                 return false;
             }
 
-            // if rectangle has no area
-            if (PointA.IsOnTheSameAxis(PointC) || other.PointA.IsOnTheSameAxis(other.PointC))
+            // if rectangles have no area
+            if (!HasArea || !other.HasArea)
             {
                 return false;
             }
@@ -124,32 +254,11 @@ namespace Nuvalance.Rectangle
             return PointA.IsOnTheSameAxis(point) || PointC.IsOnTheSameAxis(point);
         }
 
-        private bool AreIntersected(Rectangle other)
+        private Rectangle GetRectangleFromIntersection(Rectangle other)
         {
-            if (other == null)
-            {
-                return false;
-            }
-
-            // if rectangle has no area
-            if (PointA.IsOnTheSameAxis(PointC) || other.PointA.IsOnTheSameAxis(other.PointC))
-            {
-                return false;
-            }
-
-            // If one rectangle is located on left side of the other
-            if (PointA.X > other.PointC.X || other.PointA.X > PointC.X)
-            {
-                return false;
-            }
-
-            // If one rectangle is located above the other
-            if (PointC.Y > other.PointA.Y || other.PointC.Y > PointA.Y)
-            {
-                return false;
-            }
-
-            return true;
+            var pointA = new Point(Math.Max(PointA.X, other.PointA.X), Math.Min(PointA.Y, other.PointA.Y));
+            var pointC = new Point(Math.Min(PointC.X, other.PointC.X), Math.Max(PointC.Y, other.PointC.Y));
+            return new Rectangle(pointA, pointC);
         }
 
         /// <summary>

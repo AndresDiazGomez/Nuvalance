@@ -85,5 +85,61 @@
             var pointC = new Point(7, 3);
             return new Rectangle(pointA, pointC);
         }
+
+        public static Rectangle GetRectangle_X1Y1_X2Y0()
+        {
+            var pointA = new Point(1, 1);
+            var pointC = new Point(2, 0);
+            return new Rectangle(pointA, pointC);
+        }
+
+        public static Rectangle GetRectangle_X1Y3_X4Y2()
+        {
+            var pointA = new Point(1, 3);
+            var pointC = new Point(4, 2);
+            return new Rectangle(pointA, pointC);
+        }
+
+        public static Rectangle GetRectangle_X0Y1_X1Y0()
+        {
+            var pointA = new Point(0, 1);
+            var pointC = new Point(1, 0);
+            return new Rectangle(pointA, pointC);
+        }
+
+        public static Rectangle GetRectangle_X0Y2_X1Y1()
+        {
+            var pointA = new Point(0, 2);
+            var pointC = new Point(1, 1);
+            return new Rectangle(pointA, pointC);
+        }
+
+        public static Rectangle GetRectangle_X2Y2_X3Y1()
+        {
+            var pointA = new Point(2, 2);
+            var pointC = new Point(3, 1);
+            return new Rectangle(pointA, pointC);
+        }
+
+        public static Rectangle GetRectangle_X0Y3_X1Y1()
+        {
+            var pointA = new Point(0, 3);
+            var pointC = new Point(1, 1);
+            return new Rectangle(pointA, pointC);
+        }
+
+        public static Rectangle GetRectangle_X0Y2_X2Y1()
+        {
+            var pointA = new Point(0, 2);
+            var pointC = new Point(2, 1);
+            return new Rectangle(pointA, pointC);
+        }
+
+        public static Rectangle GetRectangle_X1Y1_X3Y0()
+        {
+            var pointA = new Point(1, 1);
+            var pointC = new Point(3, 0);
+            return new Rectangle(pointA, pointC);
+        }
     }
 }
