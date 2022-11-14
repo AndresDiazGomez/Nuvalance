@@ -7,6 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuvalance.Rectangle", "Nuva
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuvalance.Rectangle.Test", "Nuvalance.Rectangle.Test\Nuvalance.Rectangle.Test.csproj", "{604A24C7-E7EF-487A-8DFC-AE0ADB740549}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1EAE2C95-A634-4EC3-A968-8BB6545854C3}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
