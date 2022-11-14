@@ -81,16 +81,47 @@ namespace Nuvalance.Rectangle
         }
 
         /// <summary>
+        /// Indicates whether or not if the current rectangle is fully contained in the given rectangle.
+        /// Rectangles with no area always cause a false result.
+        /// </summary>
+        /// <param name="other">The other rectangle to compare with.</param>
+        /// <returns>True if the current rectangle is contained in the given rectangle; otherwise false</returns>
+        public bool IsFullyContainedOn(Rectangle other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            // if rectangle has no area
+            if (PointA.IsOnTheSameAxis(PointC) || other.PointA.IsOnTheSameAxis(other.PointC))
+            {
+                return false;
+            }
+
+            // If current rectangle has larger X axis than the other
+            if (PointA.X < other.PointA.X || PointC.X > other.PointC.X)
+            {
+                return false;
+            }
+
+            // If current rectangle has larger Y axis than the other
+            if (PointA.Y > other.PointA.Y || PointC.Y < other.PointC.Y)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// Indicates whether the given point is on the axis of the current rectangle.
         /// </summary>
         /// <param name="point">The point to compare with.</param>
         /// <returns>true if the point is on any axis; otherwise, false.</returns>
         public bool IsPointOnAnyAxis(Point point)
         {
-            return PointA.IsOnTheSameAxis(point) ||
-                PointB.IsOnTheSameAxis(point) ||
-                PointC.IsOnTheSameAxis(point) ||
-                PointD.IsOnTheSameAxis(point);
+            return PointA.IsOnTheSameAxis(point) || PointC.IsOnTheSameAxis(point);
         }
 
         private bool AreIntersected(Rectangle other)
@@ -101,22 +132,19 @@ namespace Nuvalance.Rectangle
             }
 
             // if rectangle has no area
-            if (PointA.IsOnTheSameAxis(PointC) ||
-                other.PointA.IsOnTheSameAxis(other.PointC))
+            if (PointA.IsOnTheSameAxis(PointC) || other.PointA.IsOnTheSameAxis(other.PointC))
             {
                 return false;
             }
 
             // If one rectangle is located on left side of the other
-            if (PointA.X > other.PointC.X ||
-                other.PointA.X > PointC.X)
+            if (PointA.X > other.PointC.X || other.PointA.X > PointC.X)
             {
                 return false;
             }
 
             // If one rectangle is located above the other
-            if (PointC.Y > other.PointA.Y ||
-                other.PointC.Y > PointA.Y)
+            if (PointC.Y > other.PointA.Y || other.PointC.Y > PointA.Y)
             {
                 return false;
             }
