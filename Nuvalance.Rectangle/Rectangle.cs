@@ -8,12 +8,17 @@ namespace Nuvalance.Rectangle
     [DebuggerDisplay("({PointA.X}, {PointA.Y}) ({PointC.X}, {PointC.Y})")]
     public class Rectangle
     {
-        public Rectangle(Point a, Point b)
+        /// <summary>
+        /// Initialize a new <see cref="Rectangle"/> class with the top left and bottom right points information.
+        /// </summary>
+        /// <param name="topLeft">Top left point.</param>
+        /// <param name="rightBottom">Right bottom point.</param>
+        public Rectangle(Point topLeft, Point rightBottom)
         {
-            int leftX = Math.Min(a.X, b.X);
-            int rightX = Math.Max(a.X, b.X);
-            int topY = Math.Max(a.Y, b.Y);
-            int bottomY = Math.Min(a.Y, b.Y);
+            int leftX = Math.Min(topLeft.X, rightBottom.X);
+            int rightX = Math.Max(topLeft.X, rightBottom.X);
+            int topY = Math.Max(topLeft.Y, rightBottom.Y);
+            int bottomY = Math.Min(topLeft.Y, rightBottom.Y);
 
             PointA = new Point(leftX, topY);
             PointB = new Point(rightX, topY);
